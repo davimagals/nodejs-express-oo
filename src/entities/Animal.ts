@@ -1,9 +1,9 @@
 export default class Animal {
-    constructor(
-        private nome: string,
-        private especie: string,
-        private raca: string,
-        private data_nasc: string,
-        private peso: number
-    ) {}
+  constructor(
+    public nome: string,
+    public especie: string,
+    public raca: string,
+    public data_nasc: string,
+    public peso: number
+  ) {}
 }

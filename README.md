@@ -8,23 +8,33 @@ Estudando Programação Orientada a Objetos com NodeJS + Express
    npm init -y
 
 2. Instalar o Express
-   npm install --save-dev typescript @types/node @types/express ts-node nodemon
+   npm install --save-dev typescript @types/node @types/express express ts-node nodemon
 
 3. Instalar a interface para o Banco de Dados
    npm install mysql2
 
 4. Ajustar o package.json
    "scripts": {
-   "start": "node server.js",
-   "dev": "nodemon server.js"
+   "start": "node dist/index.js",
+   "build": "tsc",
+   "dev": "nodemon --watch src --ext ts --exec ts-node src/index.ts"
    }
 
    "type": "module",
 
-5. Criar pasta src e configurar isso no package em "main"
+5. Criar o tsconfig e editar
+   npx tsc --init
 
-6. Criar pastas models, controllers, routes, database
+   "verbatimModuleSyntax": false,
+   "esModuleInterop": true,
+   "moduleResolution": "node",
+   "types": ["node"],
+   Comentar // "jsx": "react-jsx",
 
-7. Criar o index.js
+6. Criar pasta src e configurar isso no package em "main"
 
-8. Criar a primeira rota
+7. Criar pastas models, controllers, routes, database
+
+8. Criar o index.js
+
+9. Criar a primeira rota

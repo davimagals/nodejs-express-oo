@@ -1,10 +1,12 @@
-import pool from "../database/pool.js";
+import pool from "../database/pool";
+import { ResultSetHeader, RowDataPacket } from "mysql2";
+import Animal from "../entities/Animal";
 
 export default class AnimalModel {
   // Listar todos os animais
-  static async listarTodos(): Promise<object | null> {
+  async listarTodos(): Promise<object | null> {
     try {
-      const [result] = await pool.query("SELECT * FROM animais");
+      const [result] = await pool.query("SELECT * FROM animal");
       return result;
     } catch (error) {
       console.error(error);
@@ -13,50 +15,41 @@ export default class AnimalModel {
   }
 
   // Buscar um animal pelo seu ID
-  static async buscarPorId(id: number): Promise<object | null> {
+  async buscarPorId(id: number): Promise<object | undefined> {
     try {
-      const [result] = await pool.query(
-        "SELECT * FROM animais WHERE id = ?",
+      const [result] = await pool.query<RowDataPacket[]>(
+        "SELECT * FROM animal WHERE id = ?",
         [id]
       );
 
       return result[0];
     } catch (error) {
       console.error(error);
-      return null;
+      return undefined;
     }
   }
 
   // Adicionar um animal
-  static async adicionar(animal): Promise<number | null> {
+  async adicionar(animal: Animal): Promise<number | null> {
     try {
-      const [result] = await pool.query(
-        `INSERT INTO animais
+      const [result] = await pool.query<ResultSetHeader>(
+        `INSERT INTO animal
         (nome, especie, raca, data_nasc, peso)
         VALUES
         (?, ?, ?, ?, ?)`,
-        [animal.nome, animal.especie, animal.raca, animal.data_nasc, animal.peso]
+        [
+          animal.nome,
+          animal.especie,
+          animal.raca,
+          animal.data_nasc,
+          animal.peso,
+        ]
       );
 
       return result.insertId;
-    } catch(error) {
+    } catch (error) {
       console.error(error);
       return null;
     }
-  }
-
-  // Editar um animal pelo ID
-  static async editar(animal, id: number) {
-    await pool.query("UPDATE todos SET title = ?, done = ? WHERE id = ?", [
-      animal,
-      id,
-    ]);
-    return this.getById(id);
-  }
-
-  // Apagar um animal pelo ID
-  static async apagar(id) {
-    await pool.query("DELETE FROM todos WHERE id = ?", [id]);
-    return true;
   }
 }

@@ -2,11 +2,11 @@
   "name": "nodejs-express-oo",
   "version": "1.0.0",
   "description": "Estudando Programação Orientada a Objetos com NodeJS + Express",
-  "main": "src/index.js",
-  "type": "module",
+  "main": "dist/index.js",
   "scripts": {
-    "start": "node server.js",
-    "dev": "nodemon server.js"
+    "start": "node dist/index.js",
+    "build": "tsc",
+    "dev": "nodemon --watch src --ext ts --exec \"ts-node\" src/index.ts"
   },
   "repository": {
     "type": "git",
@@ -21,12 +21,13 @@
   "homepage": "https://github.com/davimagals/nodejs-express-oo#readme",
   "devDependencies": {
     "@types/express": "^5.0.3",
-    "@types/node": "^24.2.1",
+    "@types/node": "^24.3.0",
     "nodemon": "^3.1.10",
     "ts-node": "^10.9.2",
     "typescript": "^5.9.2"
   },
   "dependencies": {
-    "mysql2": "^3.14.3"
+    "mysql2": "^3.14.3",
+    "express": "^5.1.0"
   }
 }
